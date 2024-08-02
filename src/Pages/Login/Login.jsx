@@ -1,20 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../Shared/NavBar/NavBar";
 import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider";
 
 const Login = () => {
   const { sighIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+
   const handelLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // console.log(email, Password);
     sighIn(email, password)
       .then((result) => {
-        console.log(result);
+        console.log(result.user);
+
+        // navigate after login
+        navigate(location?.state ? location.state : "/");
       })
-      .catch((error) => console.error(error.message));
+      .catch((error) => console.error(error));
   };
 
   return (

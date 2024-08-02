@@ -1,7 +1,16 @@
+import { useEffect, useState } from "react";
+import MainNews from "../../../LayOut/MainNews/MainNews";
+
 const CentralNav = () => {
+  const [news, setNews] = useState([]);
+  useEffect(() => {
+    fetch("news.json").then((res) => res.json().then((data) => setNews(data)));
+  }, []);
   return (
     <div>
-      <h1>this is the home news section</h1>
+      {news.map((singleNews) => (
+        <MainNews key={singleNews._id} singleNews={singleNews}></MainNews>
+      ))}
     </div>
   );
 };
